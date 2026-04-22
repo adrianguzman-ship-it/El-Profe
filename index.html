@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Taquería El Profe — Valle del Roble, N.L.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink:    #111008;
+      --warm:   #f2ede6;
+      --accent: #b5320a;
+      --gold:   #c8922a;
+      --mid:    #6b6456;
+      --light:  #e8e2d9;
+      --white:  #ffffff;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'DM Sans',sans-serif; background:var(--warm); color:var(--ink); -webkit-font-smoothing:antialiased; }
+    nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 3.5rem; height:64px; background:rgba(242,237,230,0.94); backdrop-filter:blur(14px); border-bottom:1px solid var(--light); }
+    .nav-brand { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--ink); text-decoration:none; }
+    .nav-brand span { color:var(--accent); }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a { font-size:.76rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color .2s; }
+    .nav-links a:hover { color:var(--ink); }
+    .nav-cta { font-size:.76rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--white); background:var(--accent); padding:.5rem 1.4rem; border-radius:2px; text-decoration:none; transition:background .2s; }
+    .nav-cta:hover { background:#8f260a; }
+    .hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; padding-top:64px; }
+    .hero-left { display:flex; flex-direction:column; justify-content:center; padding:6rem 4rem 6rem 5.5rem; position:relative; }
+    .hero-left::after { content:''; position:absolute; top:15%; bottom:15%; right:0; width:1px; background:var(--light); }
+    .eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; display:block; }
+    .hero-title { font-family:'Playfair Display',serif; font-size:clamp(3rem,4.5vw,5.2rem); font-weight:900; line-height:1.0; }
+    .hero-title em { font-style:italic; color:var(--accent); }
+    .hero-tagline { margin-top:1.4rem; font-size:.95rem; color:var(--mid); font-style:italic; }
+    .hero-meta { margin-top:2.8rem; display:flex; flex-direction:column; gap:.85rem; }
+    .hero-meta-row { display:flex; align-items:baseline; gap:1rem; }
+    .meta-label { font-size:.68rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--mid); min-width:80px; }
+    .meta-val { font-size:.88rem; color:var(--ink); }
+    .meta-val a { color:var(--ink); text-decoration:none; border-bottom:1px solid var(--light); transition:border-color .2s; }
+    .meta-val a:hover { border-color:var(--accent); }
+    .hero-actions { margin-top:3rem; display:flex; gap:1.2rem; align-items:center; }
+    .btn-dark { font-size:.78rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--white); background:var(--ink); padding:.85rem 2rem; text-decoration:none; border-radius:2px; transition:background .2s; }
+    .btn-dark:hover { background:var(--accent); }
+    .btn-line { font-size:.78rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); text-decoration:none; border-bottom:2px solid var(--ink); padding-bottom:2px; transition:color .2s, border-color .2s; }
+    .btn-line:hover { color:var(--accent); border-color:var(--accent); }
+    .hero-right { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:3px; background:var(--light); }
+    .h-img { overflow:hidden; position:relative; }
+    .h-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .55s ease; }
+    .h-img:hover img { transform:scale(1.05); }
+    .h-img.tall { grid-row:1/3; }
+    .rating-tag { position:absolute; bottom:1rem; left:1rem; background:rgba(247,243,236,.95); padding:.45rem .9rem; font-size:.76rem; font-weight:600; color:var(--ink); }
+    .rating-tag strong { color:var(--gold); }
+    .strip { background:var(--ink); display:flex; flex-wrap:wrap; justify-content:center; }
+    .strip-item { padding:1rem 2.5rem; border-right:1px solid rgba(255,255,255,.08); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.45); }
+    .strip-item:last-child { border-right:none; }
+    .strip-item strong { color:rgba(255,255,255,.85); font-weight:500; }
+    #galeria { padding:7rem 5.5rem; background:var(--white); }
+    .section-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:3.5rem; gap:2rem; }
+    .section-head p { max-width:340px; color:var(--mid); font-size:.9rem; line-height:1.75; }
+    h2.display { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3.2rem); font-weight:900; line-height:1.1; }
+    h2.display em { font-style:italic; color:var(--accent); }
+    .gal-grid { display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:340px 230px; gap:4px; }
+    .g-cell { overflow:hidden; position:relative; background:var(--light); }
+    .g-cell img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease; }
+    .g-cell:hover img { transform:scale(1.06); }
+    .g-cell.big { grid-column:1; grid-row:1/3; }
+    .g-cap { position:absolute; bottom:0; left:0; right:0; padding:2rem 1.2rem .9rem; background:linear-gradient(transparent,rgba(17,16,8,.72)); color:#fff; font-size:.8rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; opacity:1; transition:background .3s; }
+    .g-cell:hover .g-cap { background:linear-gradient(transparent,rgba(17,16,8,.88)); }
+    #menu { padding:7rem 5.5rem; background:var(--warm); }
+    .menu-layout { display:grid; grid-template-columns:200px 1fr; gap:4.5rem; margin-top:4rem; align-items:start; }
+    .menu-sidebar { position:sticky; top:80px; display:flex; flex-direction:column; gap:.15rem; }
+    .m-btn { background:none; border:none; font-family:'DM Sans',sans-serif; text-align:left; font-size:.76rem; font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--mid); padding:.7rem 1rem; cursor:pointer; border-left:2px solid transparent; transition:color .2s, border-color .2s; }
+    .m-btn:hover { color:var(--ink); }
+    .m-btn.active { color:var(--accent); border-left-color:var(--accent); font-weight:600; }
+    .m-panel { display:none; }
+    .m-panel.active { display:block; animation:fadeIn .3s ease; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .m-panel h3 { font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:700; margin-bottom:1.8rem; padding-bottom:.9rem; border-bottom:1px solid var(--light); }
+    .m-row { display:flex; align-items:baseline; padding:.95rem 0; border-bottom:1px solid var(--light); gap:.8rem; }
+    .m-row:last-child { border-bottom:none; }
+    .m-name { font-size:.93rem; font-weight:400; color:var(--ink); }
+    .m-dots { flex:1; border-bottom:1px dotted var(--light); position:relative; top:-3px; }
+    .m-price { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--accent); white-space:nowrap; }
+    .promo-block { background:var(--ink); padding:5.5rem 5.5rem; }
+    .promo-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:3rem; gap:2rem; }
+    .promo-head h2.display { color:var(--white); }
+    .promo-head h2.display em { color:var(--gold); }
+    .promo-note { font-size:.8rem; color:rgba(255,255,255,.35); font-style:italic; }
+    .promo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1px; background:rgba(255,255,255,.07); }
+    .p-item { background:var(--ink); padding:1.8rem 1.5rem; transition:background .2s; }
+    .p-item:hover { background:#181510; }
+    .p-name { font-size:.82rem; color:rgba(255,255,255,.55); line-height:1.5; }
+    .p-price { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--gold); margin-top:.4rem; }
+    .familiar-block { background:var(--accent); padding:5rem 5.5rem; display:grid; grid-template-columns:1fr 2fr; gap:4rem; align-items:center; }
+    .familiar-block h2.display { color:var(--white); }
+    .familiar-block h2.display em { color:rgba(255,255,255,.55); }
+    .familiar-block .eyebrow { color:rgba(255,255,255,.6); }
+    .fam-cards { display:flex; gap:1px; background:rgba(255,255,255,.18); }
+    .fam-card { flex:1; background:rgba(255,255,255,.1); padding:2rem 1.5rem; }
+    .fam-name { font-size:.76rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.65); }
+    .fam-price { font-family:'Playfair Display',serif; font-size:2.6rem; font-weight:900; color:var(--white); margin-top:.2rem; }
+    .fam-note { font-size:.74rem; color:rgba(255,255,255,.45); margin-top:.5rem; line-height:1.5; }
+    #opiniones { padding:7rem 5.5rem; background:var(--white); }
+    .reviews-top { display:grid; grid-template-columns:260px 1fr; gap:5rem; align-items:start; }
+    .score-n { font-family:'Playfair Display',serif; font-size:7rem; font-weight:900; line-height:1; color:var(--ink); }
+    .score-stars { color:var(--gold); font-size:1.2rem; letter-spacing:.1em; margin-top:.3rem; }
+    .score-sub { font-size:.72rem; color:var(--mid); margin-top:.5rem; letter-spacing:.1em; text-transform:uppercase; }
+    .rev-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1.2rem; }
+    .rev-card { padding:1.6rem; border:1px solid var(--light); }
+    .rev-stars { color:var(--gold); font-size:.85rem; margin-bottom:.7rem; }
+    .rev-text { font-size:.88rem; color:var(--mid); line-height:1.75; font-style:italic; }
+    .rev-author { margin-top:1rem; font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); }
+    #contacto { background:var(--ink); padding:7rem 5.5rem; }
+    #contacto .eyebrow { color:var(--gold); }
+    #contacto h2.display { color:var(--white); }
+    #contacto h2.display em { color:var(--gold); }
+    .contact-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,.07); margin-top:4rem; }
+    .c-block { background:var(--ink); padding:2.2rem 1.8rem; }
+    .c-label { font-size:.66rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:.9rem; }
+    .c-val { font-size:.88rem; color:rgba(255,255,255,.7); line-height:1.85; }
+    .c-val a { color:rgba(255,255,255,.7); text-decoration:none; display:block; transition:color .2s; }
+    .c-val a:hover { color:var(--gold); }
+    .contact-actions { display:flex; gap:1rem; margin-top:3rem; flex-wrap:wrap; }
+    .btn-w { font-size:.76rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); background:var(--white); padding:.85rem 1.8rem; border-radius:2px; text-decoration:none; }
+    .btn-ow { font-size:.76rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--white); border:1px solid rgba(255,255,255,.28); padding:.85rem 1.8rem; border-radius:2px; text-decoration:none; }
+    .map-row { background:#100f0a; padding:1.6rem 5.5rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; border-top:1px solid rgba(255,255,255,.06); flex-wrap:wrap; }
+    .map-addr { font-size:.8rem; color:rgba(255,255,255,.4); }
+    .map-addr strong { color:rgba(255,255,255,.75); font-weight:500; }
+    .map-link { font-size:.74rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:1px; }
+    footer { background:#0a0902; color:rgba(255,255,255,.28); display:flex; align-items:center; justify-content:space-between; padding:1.6rem 5.5rem; font-size:.72rem; letter-spacing:.06em; flex-wrap:wrap; gap:1rem; }
+    footer strong { color:rgba(255,255,255,.55); font-weight:400; }
+    @media(max-width:960px){
+      nav { padding:0 1.5rem; }
+      .nav-links { display:none; }
+      .hero { grid-template-columns:1fr; }
+      .hero-left { padding:4rem 2rem; }
+      .hero-left::after { display:none; }
+      .hero-right { height:380px; }
+      #galeria, #menu, #opiniones, #contacto { padding:4.5rem 2rem; }
+      .gal-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+      .g-cell.big { grid-column:1/3; height:260px; }
+      .menu-layout { grid-template-columns:1fr; gap:2rem; }
+      .menu-sidebar { position:static; flex-direction:row; flex-wrap:wrap; gap:.4rem; }
+      .familiar-block { grid-template-columns:1fr; gap:2.5rem; padding:3.5rem 2rem; }
+      .fam-cards { flex-direction:column; }
+      .reviews-top { grid-template-columns:1fr; gap:2.5rem; }
+      .contact-grid { grid-template-columns:1fr 1fr; }
+      .promo-block, .map-row, footer { padding-left:2rem; padding-right:2rem; }
+      .section-head { flex-direction:column; align-items:flex-start; }
+      .promo-head { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="#inicio">Taquería <span>El Profe</span></a>
+  <ul class="nav-links">
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#opiniones">Opiniones</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a class="nav-cta" href="tel:8116665117">Llamar</a>
+</nav>
+<section class="hero" id="inicio">
+  <div class="hero-left">
+    <span class="eyebrow">Valle del Roble, Nuevo León</span>
+    <h1 class="hero-title">Taquería<br><em>El Profe</em></h1>
+    <p class="hero-tagline">"La Calidad, Tiene Precio"</p>
+    <div class="hero-meta">
+      <div class="hero-meta-row"><span class="meta-label">Horario</span><span class="meta-val">Lunes a Domingo · 5:00 PM – 1:00 AM</span></div>
+      <div class="hero-meta-row"><span class="meta-label">Teléfonos</span><span class="meta-val"><a href="tel:8116665117">811 666 51 17</a> · <a href="tel:8114960170">811 496 01 70</a></span></div>
+      <div class="hero-meta-row"><span class="meta-label">Precio</span><span class="meta-val">$100 – $200 por persona</span></div>
+      <div class="hero-meta-row"><span class="meta-label">Servicio</span><span class="meta-val">Aquí · Para llevar · A domicilio</span></div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-dark" href="#menu">Ver menú</a>
+      <a class="btn-line" href="#contacto">Cómo llegar</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="h-img tall">
+      <img src="https://images.unsplash.com/photo-1504544750208-dc0358ad5f15?w=900&q=80" alt="Taco de Sirloin"/>
+      <div class="rating-tag"><strong>4.4</strong> · 73 opiniones Google</div>
+    </div>
+    <div class="h-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&q=80" alt="Hamburguesa"/></div>
+    <div class="h-img"><img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=900&q=80" alt="Torta"/></div>
+  </div>
+</section>
+<div class="strip">
+  <div class="strip-item"><strong>Lun – Dom</strong> 5 PM – 1 AM</div>
+  <div class="strip-item"><strong>811 666 51 17</strong></div>
+  <div class="strip-item"><strong>811 496 01 70</strong></div>
+  <div class="strip-item"><strong>81 26 70 17 90</strong></div>
+  <div class="strip-item">Terminal a domicilio disponible</div>
+</div>
+<section id="galeria">
+  <div class="section-head">
+    <div><span class="eyebrow">Galería</span><h2 class="display">Hecho a las<br><em>brasas</em></h2></div>
+    <p>Ingredientes frescos, sazón norteña y la parrilla siempre encendida.</p>
+  </div>
+  <div class="gal-grid">
+    <div class="g-cell big"><img src="https://images.unsplash.com/photo-1504544750208-dc0358ad5f15?w=900&q=80" alt="Taco de Sirloin"/><div class="g-cap">Taco de Sirloin</div></div>
+    <div class="g-cell"><img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=900&q=80" alt="Torta"/><div class="g-cap">Torta</div></div>
+    <div class="g-cell"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&q=80" alt="Hamburguesa"/><div class="g-cap">Hamburguesa</div></div>
+    <div class="g-cell"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=80" alt="Parrilla"/><div class="g-cap">En la parrilla</div></div>
+    <div class="g-cell"><img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=900&q=80" alt="Tacos"/><div class="g-cap">Directo de la parrilla</div></div>
+  </div>
+</section>
+<section id="menu">
+  <span class="eyebrow">Menú</span>
+  <h2 class="display">Todo lo que<br><em>ofrecemos</em></h2>
+  <div class="menu-layout">
+    <nav class="menu-sidebar">
+      <button class="m-btn active" onclick="switchM('tacos',this)">Tacos</button>
+      <button class="m-btn" onclick="switchM('hamburguesas',this)">Hamburguesas</button>
+      <button class="m-btn" onclick="switchM('papas',this)">Papas</button>
+      <button class="m-btn" onclick="switchM('tortas',this)">Tortas</button>
+      <button class="m-btn" onclick="switchM('complementos',this)">Complementos</button>
+    </nav>
+    <div>
+      <div class="m-panel active" id="m-tacos">
+        <h3>Tacos</h3>
+        <div class="m-row"><span class="m-name">Sirloin</span><span class="m-dots"></span><span class="m-price">$85</span></div>
+        <div class="m-row"><span class="m-name">Trompo</span><span class="m-dots"></span><span class="m-price">$45</span></div>
+        <div class="m-row"><span class="m-name">Gringa Chica</span><span class="m-dots"></span><span class="m-price">$45</span></div>
+        <div class="m-row"><span class="m-name">Gringa Grande</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Pirata Chica</span><span class="m-dots"></span><span class="m-price">$45</span></div>
+        <div class="m-row"><span class="m-name">Pirata Grande</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Campechana Chica</span><span class="m-dots"></span><span class="m-price">$45</span></div>
+        <div class="m-row"><span class="m-name">Campechana Grande</span><span class="m-dots"></span><span class="m-price">$90</span></div>
+        <div class="m-row"><span class="m-name">Caprichos (4 pzas)</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Flautas (6 pzas)</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Quesadillas (5 pzas)</span><span class="m-dots"></span><span class="m-price">$60</span></div>
+      </div>
+      <div class="m-panel" id="m-hamburguesas">
+        <h3>Hamburguesas</h3>
+        <div class="m-row"><span class="m-name">Sirloin</span><span class="m-dots"></span><span class="m-price">$85</span></div>
+        <div class="m-row"><span class="m-name">Pollo</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Salchicha</span><span class="m-dots"></span><span class="m-price">$95</span></div>
+        <div class="m-row"><span class="m-name">Trompo</span><span class="m-dots"></span><span class="m-price">$95</span></div>
+        <div class="m-row"><span class="m-name">Tocino</span><span class="m-dots"></span><span class="m-price">$95</span></div>
+        <div class="m-row"><span class="m-name">Norteña</span><span class="m-dots"></span><span class="m-price">$95</span></div>
+        <div class="m-row"><span class="m-name">BBQ</span><span class="m-dots"></span><span class="m-price">$85</span></div>
+        <div class="m-row"><span class="m-name">Light</span><span class="m-dots"></span><span class="m-price">$85</span></div>
+        <div class="m-row"><span class="m-name">Hawaiana</span><span class="m-dots"></span><span class="m-price">$95</span></div>
+        <div class="m-row"><span class="m-name">Mixta</span><span class="m-dots"></span><span class="m-price">$110</span></div>
+        <div class="m-row"><span class="m-name">Doble</span><span class="m-dots"></span><span class="m-price">$110</span></div>
+      </div>
+      <div class="m-panel" id="m-papas">
+        <h3>Papas</h3>
+        <div class="m-row"><span class="m-name">Francesa Natural</span><span class="m-dots"></span><span class="m-price">$50</span></div>
+        <div class="m-row"><span class="m-name">Francesa Queso</span><span class="m-dots"></span><span class="m-price">$60</span></div>
+        <div class="m-row"><span class="m-name">Francesa Queso Carne</span><span class="m-dots"></span><span class="m-price">$70</span></div>
+        <div class="m-row"><span class="m-name">Asada Natural</span><span class="m-dots"></span><span class="m-price">$60</span></div>
+        <div class="m-row"><span class="m-name">Asada Queso</span><span class="m-dots"></span><span class="m-price">$70</span></div>
+        <div class="m-row"><span class="m-name">Asada Sirloin</span><span class="m-dots"></span><span class="m-price">$90</span></div>
+        <div class="m-row"><span class="m-name">Asada Trompo</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Asada Mixta</span><span class="m-dots"></span><span class="m-price">$90</span></div>
+      </div>
+      <div class="m-panel" id="m-tortas">
+        <h3>Tortas</h3>
+        <div class="m-row"><span class="m-name">Pierna</span><span class="m-dots"></span><span class="m-price">$85</span></div>
+        <div class="m-row"><span class="m-name">Sirloin</span><span class="m-dots"></span><span class="m-price">$85</span></div>
+        <div class="m-row"><span class="m-name">Trompo</span><span class="m-dots"></span><span class="m-price">$85</span></div>
+        <div class="m-row"><span class="m-name">Mixta</span><span class="m-dots"></span><span class="m-price">$85</span></div>
+      </div>
+      <div class="m-panel" id="m-complementos">
+        <h3>Complementos</h3>
+        <div class="m-row"><span class="m-name">Frijoles Charros ½ litro</span><span class="m-dots"></span><span class="m-price">$45</span></div>
+        <div class="m-row"><span class="m-name">Frijoles Charros 1 litro</span><span class="m-dots"></span><span class="m-price">$70</span></div>
+        <div class="m-row"><span class="m-name">Ingredientes preparados</span><span class="m-dots"></span><span class="m-price">$15</span></div>
+        <div class="m-row"><span class="m-name">Guacamole Chico</span><span class="m-dots"></span><span class="m-price">$40</span></div>
+        <div class="m-row"><span class="m-name">Guacamole Grande</span><span class="m-dots"></span><span class="m-price">$60</span></div>
+        <div class="m-row"><span class="m-name">Nuggets de Pollo</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Fajitas de Pollo</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Dedos de Queso</span><span class="m-dots"></span><span class="m-price">$80</span></div>
+        <div class="m-row"><span class="m-name">Aros de Cebolla</span><span class="m-dots"></span><span class="m-price">$70</span></div>
+        <div class="m-row"><span class="m-name">Salsas / Jalapeño / Aderezos</span><span class="m-dots"></span><span class="m-price">$10</span></div>
+        <div class="m-row"><span class="m-name">Ingrediente extra</span><span class="m-dots"></span><span class="m-price">$15</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="promo-block">
+  <div class="promo-head">
+    <div><span class="eyebrow" style="color:var(--gold)">Promociones</span><h2 class="display">Solo hasta<br><em>las 12 AM</em></h2></div>
+    <span class="promo-note">*Precios sujetos a cambio sin previo aviso</span>
+  </div>
+  <div class="promo-grid">
+    <div class="p-item"><div class="p-name">2 Órdenes Trompo</div><div class="p-price">$80</div></div>
+    <div class="p-item"><div class="p-name">3 Órdenes Trompo</div><div class="p-price">$110</div></div>
+    <div class="p-item"><div class="p-name">2 Salchichas Asadas</div><div class="p-price">$50</div></div>
+    <div class="p-item"><div class="p-name">2 Gringas Chica</div><div class="p-price">$80</div></div>
+    <div class="p-item"><div class="p-name">3 Gringas Chicas</div><div class="p-price">$110</div></div>
+    <div class="p-item"><div class="p-name">2 Piratas Chicas</div><div class="p-price">$80</div></div>
+    <div class="p-item"><div class="p-name">3 Piratas Chicas</div><div class="p-price">$120</div></div>
+    <div class="p-item"><div class="p-name">2 Papas Asadas con Trompo o Mixta</div><div class="p-price">$150</div></div>
+  </div>
+</div>
+<div class="familiar-block">
+  <div><span class="eyebrow">Paquete</span><h2 class="display">Para toda<br><em>la familia</em></h2></div>
+  <div class="fam-cards">
+    <div class="fam-card"><div class="fam-name">Parrillada Sirloin KG</div><div class="fam-price">$350</div><div class="fam-note">Incluye ½ litro de frijol o porción de trompo</div></div>
+    <div class="fam-card"><div class="fam-name">Trompo KG</div><div class="fam-price">$300</div></div>
+    <div class="fam-card"><div class="fam-name">Trompo ½ KG</div><div class="fam-price">$200</div></div>
+  </div>
+</div>
+<section id="opiniones">
+  <span class="eyebrow">Opiniones</span>
+  <h2 class="display" style="margin-bottom:3.5rem">Lo que dicen<br><em>nuestros clientes</em></h2>
+  <div class="reviews-top">
+    <div><div class="score-n">4.4</div><div class="score-stars">★★★★★</div><div class="score-sub">73 opiniones · Google Maps</div></div>
+    <div class="rev-grid">
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">Las hamburguesas están muy ricas, recomendables si pasas por ahí.</p><div class="rev-author">Cliente Google</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">Muy buenos tacos, muy buen servicio.</p><div class="rev-author">Cliente Google</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">Excelente lugar, excelente comida, excelente servicio.</p><div class="rev-author">Cliente Google</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">Gran variedad de opciones. El trompo está increíble. Siempre volvemos.</p><div class="rev-author">Cliente frecuente</div></div>
+    </div>
+  </div>
+</section>
+<section id="contacto">
+  <span class="eyebrow">Contacto</span>
+  <h2 class="display">Encuéntranos<br><em>aquí</em></h2>
+  <div class="contact-grid">
+    <div class="c-block"><div class="c-label">Dirección</div><div class="c-val">Av del Álamo 400<br>Valle del Roble<br>67456 N.L.</div></div>
+    <div class="c-block"><div class="c-label">Teléfonos</div><div class="c-val"><a href="tel:8116665117">811 666 51 17</a><a href="tel:8114960170">811 496 01 70</a><a href="tel:8126701790">81 26 70 17 90</a></div></div>
+    <div class="c-block"><div class="c-label">Horario</div><div class="c-val">Lunes a Domingo<br>5:00 PM – 1:00 AM</div></div>
+    <div class="c-block"><div class="c-label">Servicio</div><div class="c-val">Comer aquí<br>Para llevar<br>A domicilio<br>Terminal a domicilio</div></div>
+  </div>
+  <div class="contact-actions">
+    <a class="btn-w" href="tel:8116665117">Llamar ahora</a>
+    <a class="btn-ow" href="https://wa.me/528116665117?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank">WhatsApp</a>
+    <a class="btn-ow" href="https://maps.google.com/?q=Taqueria+El+Profe+Valle+del+Roble+NL" target="_blank">Google Maps</a>
+  </div>
+</section>
+<div class="map-row">
+  <div class="map-addr"><strong>Taquería El Profe</strong> — Av del Álamo 400, Valle del Roble, 67456 N.L.</div>
+  <a class="map-link" href="https://maps.google.com/?q=Taqueria+El+Profe+Valle+del+Roble+NL" target="_blank">Ver en Google Maps</a>
+</div>
+<footer>
+  <span><strong>Taquería El Profe</strong> · Valle del Roble, N.L.</span>
+  <span>*Precios sujetos a cambio sin previo aviso</span>
+</footer>
+<script>
+  function switchM(id, btn) {
+    document.querySelectorAll('.m-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.m-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('m-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
